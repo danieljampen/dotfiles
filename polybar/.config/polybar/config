@@ -108,10 +108,13 @@ font-4 = Font Awesome 5 Free:style=Solid:pixelsize=8;1
 font-5 = Font Awesome 5 Brands:pixelsize=8;1
 font-2 = sm4tik:pixelsize=10;1
 
-modules-left = rofi workspaces xwindow
+modules-left = powermenu workspaces xwindow
 modules-center = 
-modules-right = filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature powermenu
+modules-right = filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature date
 
+tray-position = right
+tray-padding = 4
+;tray-background = #0063ff
 
 ;wm-restack = bspwm
 wm-restack = i3

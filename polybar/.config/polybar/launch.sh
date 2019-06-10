@@ -8,7 +8,7 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch polybar
 polybar top &
-polybar bottom &
+#polybar bottom &
 
 if type "xrandr"; then
   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
@@ -17,5 +17,5 @@ if type "xrandr"; then
   done
 else
   polybar --reload top &
-  polybar --reload bottom &
+  #polybar --reload bottom &
 fi
