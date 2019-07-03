@@ -194,7 +194,7 @@ bindsym $mod+d exec rofi -show drun
 bindsym $mod+Tab exec rofi -show window
 
 # shut down, restart and locking features
-bindsym $mod+Delete exec ~/scripts/rofi-computer
+bindsym $mod+Delete exec ~/.config/rofi/rofi-computer
 bindsym $mod+l exec "betterlockscreen -l dimblur"
 
 # i3 gaps
@@ -213,7 +213,7 @@ hide_edge_borders none
 exec "setxkbmap -layout de_CH"
 
 # reapply xrandr setup using autorandr
-exec --no-startup-id autorandr --change; sleep 3;
+#exec --no-startup-id autorandr --change; sleep 10;
 
 # exec applications
 exec --no-startup-id nm-applet
