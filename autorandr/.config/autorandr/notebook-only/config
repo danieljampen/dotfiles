@@ -1,0 +1,10 @@
+output DP-1
+off
+output HDMI-1
+off
+output eDP-1
+mode 3000x2000
+pos 0x0
+primary
+rate 59.99
+transform 0.799988,0.000000,0.000000,0.000000,0.799988,0.000000,0.000000,0.000000,1.000000

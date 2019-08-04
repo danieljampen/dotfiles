@@ -1,11 +1,11 @@
 #!/bin/sh
 
-DIALOG_RESULT=$(echo -e 'exit i3\nsuspend\nreboot\nshutdown\nlock screen' | rofi -dmenu -i -p "power options" -hide-scrollbar)
+DIALOG_RESULT=$(echo -e 'exit sway\nsuspend\nreboot\nshutdown\nlock screen' | rofi -dmenu -i -p "power options" -hide-scrollbar)
 
 echo "This result is : $DIALOG_RESULT"
 sleep 1;
 
-if [ "$DIALOG_RESULT" = "exit i3" ];
+if [ "$DIALOG_RESULT" = "exit sway" ];
 then
     i3-msg 'exit'
 elif [ "$DIALOG_RESULT" = "suspend" ];

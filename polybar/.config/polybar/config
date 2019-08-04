@@ -70,7 +70,7 @@ font-2 = sm4tik:pixelsize=10;1
 
 modules-left = powermenu workspaces xwindow
 modules-center = 
-modules-right = filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature date
+modules-right = filesystem backlight alsa pulseaudio memory cpu wlan eth battery temperature date
 
 tray-position = right
 tray-padding = 0
@@ -106,7 +106,7 @@ content = 
 content-padding = 4
 content-background = ${colors.acolor}
 content-foreground = ${colors.fg}
-click-left = ~/.dotfiles/rofi/.config/rofi/rofi-computer
+click-left = ~/.config/rofi/rofi-computer
 
 [module/workspaces]
 type = internal/i3
@@ -224,12 +224,11 @@ icon-next = 
 label-song-maxlen = 25
 label-song-ellipsis = true
 
-[module/xbacklight]
-type = internal/xbacklight
-
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
 format = <label> <bar>
 label = BL
-
 bar-width = 10
 bar-indicator = |
 bar-indicator-foreground = #fff
@@ -241,18 +240,13 @@ bar-empty = ─
 bar-empty-font = 2
 bar-empty-foreground = ${colors.foreground-alt}
 
-[module/backlight-acpi]
-inherit = module/xbacklight
-type = internal/backlight
-card = intel_backlight
-
 [module/cpu]
 type = internal/cpu
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
-label = %percentage:2%%
+label = CPU: %percentage:2%%
 
 [module/memory]
 type = internal/memory
@@ -260,7 +254,7 @@ interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #4bffdc
-label = %percentage_used%%
+label = RAM: %percentage_used%%
 
 [module/wlan]
 type = internal/network
