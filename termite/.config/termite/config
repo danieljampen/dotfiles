@@ -1,0 +1,6 @@
+[colors]
+background=rgba(0,0,0,0.5)
+foreground=rgba(255,255,255,1)
+
+[options]
+font = Noto Sans Mono 13

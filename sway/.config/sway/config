@@ -11,7 +11,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Droid Sans 11
+font Noto Sans 11
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -22,14 +22,17 @@ font pango:Droid Sans 11
 # The font above is very space-efficient, that is, it looks good, sharp and
 # clear in small sizes. However, its unicode glyph coverage is limited, the old
 # X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
+
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec xfce4-terminal
+bindsym $mod+Return exec termite
+
+# start browser
+bindsym $mod+Ctrl+Return exec qutebrowser
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -183,21 +186,21 @@ set $inactive-text-color #676E7D
 set $urgent-bg-color     #E39F52
 
 # file explorer
-bindsym $mod+e exec xfce4-terminal -e ranger
+bindsym $mod+e exec termite -e ranger
 
 # rofi menu
 # start rofi (dmenu mode)
-bindsym $mod+d exec rofi -show drun
+bindsym $mod+d exec rofi -show drun -show-icons
 
 # start rofi (window mode)
-bindsym $mod+Tab exec rofi -show window
+#bindsym $mod+Tab exec rofi -show window
 
 # shut down, restart and locking features
 bindsym $mod+Delete exec ~/.config/rofi/rofi-computer
 bindsym $mod+l exec "swaylock -c .config/swaylock/config"
 
 # i3 gaps
-for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 3
 gaps inner 15
 gaps outer 0
 
@@ -206,16 +209,24 @@ default_border pixel 2
 default_floating_border normal 2
 hide_edge_borders none
 
-# background configuration
-output "*" bg /home/jampe/wallpaper.jpg fill
+# background configuration => do it post kanshi
+#output "*" bg /home/jampe/Pictures/wallpaper.jpg fill
+
+#output eDP-1 disable
+#output DP-3 mode 2560x1440@143.856003Hz
 
 # input configuration
-input * xkb_layout "ch"
+input "16700:8455:Dell_Dell_USB_Entry_Keyboard" xkb_layout "ch"
+input "1118:2338:Microsoft_Surface_Keyboard" xkb_layout "ch"
+input "1133:49960:Logitech_USB_Keyboard" xkb_layout "ch"
+input "1008:842:Chicony_HP_Elite_USB_Keyboard" xkb_layout "ch"
 input "1118:2338:Microsoft_Surface_Keyboard_Touchpad" {
     tap enabled
     natural_scroll enabled
 }
 
+# enable num lock on all input devices
+input "*" xkb_numlock enable
 
 # Pulse Audio 
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
@@ -225,6 +236,18 @@ bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 # brightness control
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+
+# screenshot utility
+bindsym Ctrl+Shift+s exec ~/.config/rofi/rofi-wl-screenshot
+
+# keepmenu (keepass tool)
+bindsym $mod+Ctrl+Space exec "keepmenu"
+
+# task manager
+bindsym Ctrl+Shift+Escape exec "rofi -show top -modi top -lines 25 -width 1600"
+
+# network management
+bindsym Ctrl+Shift+n exec "networkmanager_dmenu"
 
 # idle management and lock screen
 exec_always --no-startup-id swayidle -w timeout 300 'swaylock -c .config/swaylock/config' timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' before-sleep 'swaylock -c .config/swaylock/config'
@@ -240,15 +263,22 @@ for_window [app_id="waybar" floating] {
 for_window [app_id="^.*"] inhibit_idle fullscreen
 for_window [class="^.*"] inhibit_idle fullscreen
 
+# brave fullscreen disable
+for_window [app_id="^brave$"] fullscreen disable
+
 #============================
 #====  autostart applications
 
 # network manager
-exec --no-startup-id "nm-applet --indicator"
+#exec --no-startup-id "nm-applet --indicator"
 # nextcloud client in background
 exec --no-startup-id "nextcloud --background"
 # adjust displays according to kanshi profiles
-exec_always --no-startup-id "kanshi"
+exec_always --no-startup-id "sh ~/.config/kanshi/run_kanshi.sh"
+#exec_always --no-startup-id "sh ~/.config/sway/bing_wallpaper.sh"
 # waybar
-exec_always --no-startup-id waybar
-
+exec_always --no-startup-id "sleep 5; waybar"
+# background
+exec_always --no-startup-id "sleep 5; swaymsg 'output * bg /home/jampe/Pictures/wallpaper.jpg fill'"
+# anbox
+exec --no-startup-id "sh ~/.config/anbox/startup_anbox.sh"

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+exec grim -g "$(slurp)" - | wl-copy
+DIALOG_RESULT=$(echo -e 'copy\nsave\ncancel' | rofi -dmenu -i -p "Screenshot options" -hide-scrollbar )
+
+echo "This result is : $DIALOG_RESULT"
+
+if [ "$DIALOG_RESULT" = "save" ]
+then
+    wl-paste > ~/Pictures/$(date +'%Y-%m-%d-%H%M%S_screenshot.png')
+    wl-copy -c
+elif [ "$DIALOG_RESULT" = "cancel" ]
+then
+    wl-copy -c
+fi

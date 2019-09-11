@@ -70,7 +70,7 @@ font-2 = sm4tik:pixelsize=10;1
 
 modules-left = powermenu workspaces xwindow
 modules-center = 
-modules-right = filesystem backlight alsa pulseaudio memory cpu wlan eth battery temperature date
+modules-right = filesystem memory cpu temperature wlan eth battery-top battery-base backlight pulseaudio date
 
 tray-position = right
 tray-padding = 0
@@ -115,7 +115,6 @@ enable-click = true
 enable-scroll = true
 format-padding = 0
 content-padding = 6
-
 label-focused-padding = 4
 label-unfocused-padding = 4
 label-urgent-padding = 4
@@ -128,14 +127,11 @@ label = %title:0:30:...%
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
-
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-underline = ${colors.secondary}
-
 label-layout = %layout%
 label-layout-underline = ${colors.secondary}
-
 label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
@@ -146,10 +142,15 @@ type = internal/fs
 interval = 25
 
 mount-0 = /
+mount-1 = /home
+mount-2 = /boot
 
 label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
+
+format-mounted-underline = #0a81f5
+format-unmounted-underline = #0a81f5
 
 [module/bspwm]
 type = internal/bspwm
@@ -227,18 +228,8 @@ label-song-ellipsis = true
 [module/backlight]
 type = internal/backlight
 card = intel_backlight
-format = <label> <bar>
-label = BL
-bar-width = 10
-bar-indicator = |
-bar-indicator-foreground = #fff
-bar-indicator-font = 2
-bar-fill = ─
-bar-fill-font = 2
-bar-fill-foreground = #9f78e1
-bar-empty = ─
-bar-empty-font = 2
-bar-empty-foreground = ${colors.foreground-alt}
+label = BL %percentage%%
+format-underline = #64FE2E
 
 [module/cpu]
 type = internal/cpu
@@ -263,7 +254,7 @@ interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
 format-connected-underline = #9f78e1
-label-connected = %essid%
+label-connected = wlp1s0: %essid% (%signal% %) - %local_ip%
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -286,7 +277,7 @@ interval = 3.0
 format-connected-underline = #55aa55
 format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
+label-connected = enp0s20f0u4u2: %local_ip%
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -296,46 +287,30 @@ format-disconnected =
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 1
 
-date =
-date-alt = " %Y-%m-%d"
+date = "%d.%m.%Y"
+date-alt = "%d.%m.%Y"
 
 time = %H:%M
 time-alt = %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+format-underline = #D8D8D8
 
 label = %date% %time%
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume = <label-volume> <bar-volume>
-label-volume = VOL %percentage%%
+label-volume = Volume: %percentage%%
 label-volume-foreground = ${root.foreground}
+format-volume-underline = #FACC2E
 
-label-muted = 🔇 muted
+label-muted = Volume: muted
 label-muted-foreground = #666
-
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
+format-muted-underline = #FACC2E
 
 [module/alsa]
 type = internal/alsa
@@ -365,38 +340,71 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
-[module/battery]
+[module/battery-top]
 type = internal/battery
-battery = BAT0
+battery = BAT1
 adapter = ADP1
 full-at = 98
 
-format-charging = <animation-charging> <label-charging>
+format-charging = B-Top <animation-charging> <label-charging>
 format-charging-underline = #ffb52a
 
-format-discharging = <animation-discharging> <label-discharging>
+format-discharging = B-Top <label-discharging> <animation-discharging> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
 format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = ${self.format-charging-underline}
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-foreground = ${colors.foreground-alt}
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
-animation-charging-framerate = 750
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 500
 
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
-animation-discharging-foreground = ${colors.foreground-alt}
-animation-discharging-framerate = 750
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+animation-discharging-framerate = 1000
+
+[module/battery-base]
+type = internal/battery
+battery = BAT2
+adapter = ADP1
+full-at = 98
+
+format-charging = B-Base <animation-charging> <label-charging>
+format-charging-underline = #ffb52a
+
+format-discharging = B-Base <animation-discharging> <label-discharging>
+format-discharging-underline = ${self.format-charging-underline}
+
+format-full-prefix = " "
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-foreground = ${colors.foreground-alt}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 500
+
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+animation-discharging-framerate = 1000
 
 [module/temperature]
 type = internal/temperature
@@ -404,7 +412,7 @@ thermal-zone = 0
 warn-temperature = 60
 
 format = <ramp> <label>
-format-underline = #f50a4d
+format-underline = #FE2E9A
 format-warn = <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
 

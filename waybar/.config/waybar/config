@@ -58,8 +58,7 @@
             "critical": 15
         },
         "format": "B-TOP: {capacity}% {icon}",
-        // "format-good": "", // An empty format will hide the module
-        // "format-full": "",
+        "format-charging": "B-TOP: {capacity}% ",
         "format-icons": ["", "", "", "", ""]
     },
     "battery#bat2": {
@@ -70,18 +69,18 @@
             "critical": 15
         },
         "format": "B-BASE: {capacity}% {icon}",
-        // "format-good": "", // An empty format will hide the module
-        // "format-full": "",
+        "format-charging": "B-BASE: {capacity}% ",
         "format-icons": ["", "", "", "", ""]
     },
     "network": {
         // "interface": "wlp2s0", // (Optional) To force the use of this interface
-        "format-wifi": "WLAN: {essid} ({signalStrength}%) ",
-        "format-ethernet": "ETH: {ifname}: {ipaddr}/{cidr} ",
-        "format-disconnected": "Disconnected ⚠"
+        "format-wifi": "WLAN: {essid} ({signalStrength}%): {ipaddr}/{cidr} ",
+        "format-ethernet": "LAN: {ifname}: {ipaddr}/{cidr} ",
+        "format-disconnected": "No Network ⚠",
+	"on-click": "networkmanager_dmenu"
     },
     "pulseaudio": {
-        //"scroll-step": 1,
+        "scroll-step": 5,
         "format": "Audio {volume}% {icon}",
         "format-bluetooth": "Audio {volume}% {icon}",
         "format-muted": "Audio muted ",

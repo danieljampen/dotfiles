@@ -1,0 +1,29 @@
+#!/bin/bash
+# changeBrightness
+# e.g. use : changeBrightness 5%+
+#            changeBrightness 5%-
+
+# Arbitrary but unique message id
+msgId="552093"
+  
+# Change the volume using alsa(might differ if you use pulseaudio)
+brightnessctl set "$@" > /dev/null
+ 
+# Query amixer for the current volume and whether or not the speaker is muted
+percent=$(bc <<< "scale=6; 100/$(brightnessctl max)*$(brightnessctl get)" | awk '{print int($1+0.5)}')
+
+# select icon
+percent=$(expr $percent + 0)
+if [[ $percent -lt 35 ]]; then
+	icon="non-starred"
+elif [[ $percent -gt 85 ]]; then
+	icon="starred"
+else
+	icon="semi-starred"
+fi
+
+dunstify -a "changeBrightness" -u low -i "$icon" -r "$msgId" \
+"Brightness: ${percent}%" "$(~/.config/dunst/getProgressString 10 "<b> </b>" " " $percent)"
+ 
+# Play the volume changed sound
+canberra-gtk-play -i audio-volume-change -d "changeVolume"

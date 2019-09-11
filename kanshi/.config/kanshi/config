@@ -1,7 +1,16 @@
 {
-	output eDP-1 enable mode 3000x2000 scale 1.4
+	output eDP-1 enable mode 3000x2000 scale 1
+}
+{
+	output "Unknown ZOWIE XL LCD W8G01644SL0" mode 2560x1440@143856Hz
+	output eDP-1 disable
 }
 {
 	output eDP-1 disable
-	output "Unknown ZOWIE XL LCD W8G01644SL0" enable mode 2560x1440
+	output "Dell Inc. DELL U2412M 0FFXD46N5EGS" enable position 0,0
+	output "Dell Inc. DELL U2412M 0FFXD46N5ENS" enable position 1920,0
+}
+{
+	output eDP-1 disable
+	output "Philips Consumer Electronics Company Philips 272C4 AU41309003821" enable
 }
