@@ -22,7 +22,7 @@ background = #222
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
-foreground-alt = #555
+foreground-alt = #666
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
@@ -70,7 +70,7 @@ font-2 = sm4tik:pixelsize=10;1
 
 modules-left = powermenu workspaces xwindow
 modules-center = 
-modules-right = filesystem memory cpu temperature wlan eth battery-top battery-base backlight pulseaudio date
+modules-right = filesystem memory cpu backlight temperature wlan eth battery-top battery-base pulseaudio date
 
 tray-position = right
 tray-padding = 0
@@ -234,56 +234,54 @@ format-underline = #64FE2E
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
 label = CPU: %percentage:2%%
 
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #4bffdc
 label = RAM: %percentage_used%%
 
 [module/wlan]
 type = internal/network
 interface = wlp1s0
-interval = 3.0
 
-format-connected = <ramp-signal> <label-connected>
+interval = 1.0
+ping-interval = 3
+
+format-connected = <label-connected>
 format-connected-underline = #9f78e1
 label-connected = wlp1s0: %essid% (%signal% %) - %local_ip%
 
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+format-disconnected = <label-disconnected>
+format-disconnected-underline = #9f78e1
+format-disconnected-foreground = ${colors.foreground-alt}
+label-disconnected = wlp1s0: disconnected
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground-alt}
+format-packetloss = <animation-packetloss> <label-connected>
+
+; Only applies if <animation-packetloss> is used
+animation-packetloss-0 = ⚠
+animation-packetloss-0-foreground = #ffa64c
+animation-packetloss-1 = 📶
+animation-packetloss-1-foreground = #000000
+; Framerate in milliseconds
+animation-packetloss-framerate = 500
 
 [module/eth]
 type = internal/network
 interface = enp0s20f0u4u2
-interval = 3.0
+
+interval = 1.0
+ping-interval = 3
 
 format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = enp0s20f0u4u2: %local_ip%
+label-connected = eth: %local_ip%
 
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+format-disconnected = <label-disconnected>
+format-disconnected-underline = #9f78e1
+format-disconnected-foreground = ${colors.foreground-alt}
 
 [module/date]
 type = internal/date
@@ -295,8 +293,6 @@ date-alt = "%d.%m.%Y"
 time = %H:%M
 time-alt = %H:%M:%S
 
-format-prefix = 
-format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #D8D8D8
 
 label = %date% %time%
@@ -350,9 +346,11 @@ format-charging = B-Top <animation-charging> <label-charging>
 format-charging-underline = #ffb52a
 
 format-discharging = B-Top <label-discharging> <animation-discharging> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
+format-discharging-underline = #ffb52a
 
-format-full-prefix = " "
+format-full-prefix = "B-Top  "
+format-full-foreground = ${colors.foreground-alt}
+format-full-underline = #ffb52a
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -383,9 +381,11 @@ format-charging = B-Base <animation-charging> <label-charging>
 format-charging-underline = #ffb52a
 
 format-discharging = B-Base <animation-discharging> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
+format-discharging-underline = #ffb52a
 
-format-full-prefix = " "
+format-full-prefix = "B-Base  "
+format-full-foreground = ${colors.foreground-alt}
+format-full-underline = #ffb52a
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -411,19 +411,14 @@ type = internal/temperature
 thermal-zone = 0
 warn-temperature = 60
 
-format = <ramp> <label>
+format = <label>
 format-underline = #FE2E9A
-format-warn = <ramp> <label-warn>
+format-warn = <label-warn>
 format-warn-underline = ${self.format-underline}
 
-label = %temperature-c%
-label-warn = %temperature-c%
+label = Top: %temperature-c%
+label-warn = Top: %temperature-c%
 label-warn-foreground = ${colors.secondary}
-
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground-alt}
 
 [settings]
 screenchange-reload = true

@@ -63,7 +63,7 @@ should_lock() {
 # main()
 if should_lock; then
      echo locking...
-     xdotool key Super+l
+     sh ~/.config/xautolock/lock.sh
 else
      echo not locking...
 fi

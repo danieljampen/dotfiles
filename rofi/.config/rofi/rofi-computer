@@ -1,17 +1,15 @@
 #!/bin/sh
 
-DIALOG_RESULT=$(echo -e 'cancel\nshutdown\nreboot\nlogout' | rofi -dmenu -i -p "power options" -hide-scrollbar -lines 4 )
+DIALOG_RESULT=$(echo -e 'shutdown\nsleep\nreboot\nlogout' | rofi -dmenu -i -p "power options" -hide-scrollbar -lines 4 )
 
 echo "This result is : $DIALOG_RESULT"
-sleep 1;
 
-if [ "$DIALOG_RESULT" = "logout" ];
-then
+if [ "$DIALOG_RESULT" = "logout" ]; then
     i3-msg 'exit'
-elif [ "$DIALOG_RESULT" = "reboot" ];
-then
+elif [ "$DIALOG_RESULT" = "reboot" ]; then
     exec reboot
-elif [ "$DIALOG_RESULT" = "shutdown" ];
-then
+elif [ "$DIALOG_RESULT" = "shutdown" ]; then
     exec shutdown -h now
+elif [ "$DIALOG_RESULT" = "sleep" ]; then
+    exec systemctl suspend
 fi

@@ -14,5 +14,8 @@ baseurl="https://www.bing.com/"
 wluri=$(curl $baseurl"HPImageArchive.aspx?format=js&idx=0&n=20&mkt=en-US" -s | jq '.images[].url' --raw-output | shuf -n 1)
 
 curl "$baseurl$wluri" -s > $wlpath
-nitrogen --restore
 convert $wlpath -filter Gaussian -blur 0x8 -level 10%,90%,0.5 $lswlpath
+echo "lockscreen background generated!"
+
+nitrogen --restore
+echo "background updated"
